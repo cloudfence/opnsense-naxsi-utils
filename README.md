@@ -1,6 +1,8 @@
-# NAXSI log file parser script
+# NAXSI Log File Parser Scripts
 
-This script processes a log file, extracts and formats key information, and provides a paginated view of the log entries.
+This repository contains two scripts designed to parse and analyze log files effectively, providing insights into log details and correlating them with specific NAXSI rules.
+
+# NAXSI log file parser script
 
 ## Features
 
@@ -15,7 +17,7 @@ This script processes a log file, extracts and formats key information, and prov
 - NGINX plugin with NAXSI rules installed
 - `sed` command-line utility
 
-## Usage
+## Usagex
 
 1. Save the script to a file, e.g., `naxsi-parse-logs.sh`.
 2. Make the script executable:
@@ -60,3 +62,95 @@ NAXSI_FMT Fields:
   score: 8
   zone: BODY
  ```
+
+# NAXSI Log Analyzer Script
+
+## Overview
+
+The NAXSI Log Analyzer script processes NGINX log files containing NAXSI rule violations, maps rule IDs to their types, and correlates them with IP addresses and domains. This script provides a detailed summary and insights into security events captured by NAXSI.
+
+---
+
+## Prerequisites
+
+- **NAXSI Core Rules**: Ensure the `naxsi_core.rules` file is located at `/usr/local/etc/nginx/naxsi_core.rules`.
+- **Log Files**: The directory should contain log files in `.log` or `.log.gz` format, matching the patterns `<domain>.error.log` or `<domain>.error.log.gz`.
+
+---
+
+## Usage
+
+### Steps
+
+1. Save the script as `naxsi-summary.sh`.
+2. Make the script executable:
+   ```bash
+   chmod +x naxsi-summary.sh
+   ./naxsi-summary.sh /var/log/nginx
+
+# NAXSI Log Analyzer Script
+
+## Overview
+
+The NAXSI Log Analyzer script processes NGINX log files containing NAXSI rule violations, maps rule IDs to their types, and correlates them with IP addresses and domains. This script provides a detailed summary and insights into security events captured by NAXSI.
+
+---
+
+## Prerequisites
+
+- **NAXSI Core Rules**: Ensure the `naxsi_core.rules` file is located at `/usr/local/etc/nginx/naxsi_core.rules`.
+- **Log Files**: The directory should contain log files in `.log` or `.log.gz` format, matching the patterns `<domain>.error.log` or `<domain>.error.log.gz`.
+
+---
+
+## Usage
+
+### Steps
+
+1. Save the script as `naxsi-summary.sh`.
+2. Make the script executable:
+   ```bash
+   chmod +x naxsi-summary.sh
+   ./naxsi-summary.sh <log_directory>
+
+### Example
+
+ ```./naxsi-summary.sh /var/log/nginx ```
+
+## Features
+
+    Parses naxsi_core.rules to map rule IDs to their respective types.
+    Processes both .log and .log.gz files.
+    Extracts relevant fields such as:
+        client (IP address)
+        server (domain)
+        id (NAXSI rule ID)
+    Correlates rule violations with IPs and domains.
+    Provides:
+        Summary of IDs and their associated IPs, domains, and types.
+        Detailed breakdown of rule triggers by IP, domain, and type.
+
+## Example Output
+ ```
+Summary of IDs
+
+Summary of IDs, their associated IPs, Domains, and Types:
+ID 1001 (SQL Injection): Triggered 8 times by IPs and Domains:
+  - IP: 192.168.1.100, Domain: example.com (3 occurrences)
+  - IP: 10.0.0.5, Domain: test.com (5 occurrences)
+
+ID 2002 (XSS): Triggered 6 times by IPs and Domains:
+  - IP: 192.168.1.100, Domain: example.com (2 occurrences)
+  - IP: 10.0.0.5, Domain: test.com (4 occurrences)
+
+Breakdown by IP
+
+Summary of Source IPs and the IDs they triggered by Domain and Type:
+IP 192.168.1.100: Triggered the following IDs by Domain and Type:
+  - ID: 1001 (SQL Injection), Domain: example.com (3 occurrences)
+  - ID: 2002 (XSS), Domain: example.com (2 occurrences)
+
+IP 10.0.0.5: Triggered the following IDs by Domain and Type:
+  - ID: 1001 (SQL Injection), Domain: test.com (5 occurrences)
+  - ID: 2002 (XSS), Domain: test.com (4 occurrences)
+```
