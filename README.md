@@ -17,7 +17,7 @@ This repository contains two scripts designed to parse and analyze log files eff
 - NGINX plugin with NAXSI rules installed
 - `sed` command-line utility
 
-## Usagex
+## Usage
 
 1. Save the script to a file, e.g., `naxsi-parse-logs.sh`.
 2. Make the script executable:
@@ -29,23 +29,9 @@ This repository contains two scripts designed to parse and analyze log files eff
  ```./naxsi-parse-logs.sh /var/log/nginx/domain.com.error.log ```
 
 
-
 ## Parameters
 
     <filename>: The path to the log file to be processed.
-
-Script Logic
-
-    Input Validation:
-        Ensures a filename is provided.
-        Checks if the file exists.
-    Log Line Processing:
-        Reads the log file line by line.
-        Extracts key fields such as timestamp, error level, client, server, request, and NAXSI_FMT details.
-        Formats the extracted details for readability.
-    Pagination:
-        Displays 5 log entries at a time.
-        Pauses and waits for user input before continuing.
 
 ## Example Output
  ```
@@ -88,47 +74,12 @@ The NAXSI Log Analyzer script processes NGINX log files containing NAXSI rule vi
    chmod +x naxsi-summary.sh
    ./naxsi-summary.sh /var/log/nginx
 
-# NAXSI Log Analyzer Script
-
-## Overview
-
-The NAXSI Log Analyzer script processes NGINX log files containing NAXSI rule violations, maps rule IDs to their types, and correlates them with IP addresses and domains. This script provides a detailed summary and insights into security events captured by NAXSI.
 
 ---
-
-## Prerequisites
-
-- **NAXSI Core Rules**: Ensure the `naxsi_core.rules` file is located at `/usr/local/etc/nginx/naxsi_core.rules`.
-- **Log Files**: The directory should contain log files in `.log` or `.log.gz` format, matching the patterns `<domain>.error.log` or `<domain>.error.log.gz`.
-
----
-
-## Usage
-
-### Steps
-
-1. Save the script as `naxsi-summary.sh`.
-2. Make the script executable:
-   ```bash
-   chmod +x naxsi-summary.sh
-   ./naxsi-summary.sh <log_directory>
 
 ### Example
 
  ```./naxsi-summary.sh /var/log/nginx ```
-
-## Features
-
-    Parses naxsi_core.rules to map rule IDs to their respective types.
-    Processes both .log and .log.gz files.
-    Extracts relevant fields such as:
-        client (IP address)
-        server (domain)
-        id (NAXSI rule ID)
-    Correlates rule violations with IPs and domains.
-    Provides:
-        Summary of IDs and their associated IPs, domains, and types.
-        Detailed breakdown of rule triggers by IP, domain, and type.
 
 ## Example Output
  ```
